@@ -1,122 +1,66 @@
-SkillSync — Peer-to-Peer Skill Swapping Platform
+SkillSync – Peer-to-Peer Skill Swapping Platform
+🚩 Problem
 
-MERN stack app: MongoDB, Express, React (Vite), Node.js, with Socket.io for real-time chat.
+People want to learn valuable skills but can't afford courses. At the same time, many people know something useful they could teach — if only they could exchange skills directly.
 
-Folder Structure
+🎯 Solution
 
-skillsync/
-├── backend/
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── userController.js
-│   │   ├── matchController.js
-│   │   ├── sessionController.js
-│   │   ├── reviewController.js
-│   │   ├── messageController.js
-│   │   ├── reportController.js
-│   │   └── adminController.js
-│   ├── middleware/
-│   │   └── auth.js
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Match.js
-│   │   ├── Session.js
-│   │   ├── Review.js
-│   │   ├── Message.js
-│   │   └── Report.js
-│   ├── routes/
-│   ├── .env.example
-│   ├── package.json
-│   └── server.js
-└── frontend/
-    ├── src/
-    │   ├── api/
-    │   │   └── axios.js
-    │   ├── context/
-    │   │   └── AuthContext.jsx
-    │   ├── components/
-    │   │   ├── Sidebar
-    │   │   ├── DashboardLayout
-    │   │   └── ProtectedRoute
-    │   ├── pages/
-    │   │   ├── Home.jsx
-    │   │   ├── Login.jsx
-    │   │   ├── Register.jsx
-    │   │   ├── Dashboard.jsx
-    │   │   ├── ExploreMatches.jsx
-    │   │   ├── MyMatches.jsx
-    │   │   ├── MatchDetails.jsx
-    │   │   ├── Sessions.jsx
-    │   │   └── Profile.jsx
-    │   ├── pages/admin/
-    │   │   └── AdminOverview.jsx
-    │   ├── App.jsx
-    │   ├── main.jsx
-    │   └── index.css
-    ├── index.html
-    ├── package.json
-    ├── vite.config.js
-    ├── tailwind.config.js
-    └── postcss.config.js
+SkillSync is a platform where users can list skills they can teach and skills they want to learn, then match with others for peer-to-peer learning swaps. Think of it like barter, but for learning.
 
-Live Application
+Live Application: https://skill-sync-seven-peach.vercel.app/
 
-https://skill-sync-seven-peach.vercel.app/
+🖥️ Tech Stack
+MongoDB – Users, Skills, Matches, Sessions, Reviews
+Express + Node.js – Auth, matching logic (non-AI), session handling
+React.js – Skill dashboard, match explorer, chat, profile system
+🔑 Key Features
+👤 User Profile
+Login/Register (Google OAuth or email)
+Set skills you can teach (with experience level, optional proof)
+Set skills you want to learn
+Set availability slots
+Set city/timezone for better matches
+Profile badge system:
+Verified Teacher (after X sessions)
+Peer Rated (positive reviews)
+🔍 Explore & Match
+See a list of available swaps:
+"You can teach A, they want to learn A"
+"They can teach B, you want to learn B"
+Mutual match logic (non-AI, rule-based) — matches are only shown when both users' needs align
+Match requests with status tracking: Pending, Accepted, Completed
+🗓️ Sessions
+Request 1:1 sessions
+Schedule by selecting from each other's availability
+Built-in video call link (Zoom/Google Meet integration or placeholder link)
+Track progress with notes, resources, and milestones
+Session reminders (email or in-app)
+💬 In-app Chat
+Chat with matched users
+Opens only after a match is accepted
+File sharing: docs, PDFs, images
+🏅 Verification & Reviews
+Peer reviews after sessions (1–5 stars, comments)
+Admin skill verification (optional test or document upload)
+Complaints/abuse reporting
 
-Repository
-
-https://github.com/nkour5308/SkillSync
-
-Setup
-
-1. Backend
-
-cd backend
-npm install
-npm run dev
-
-The backend runs on http://localhost:5000.
-
-Create a .env file inside the backend folder using .env.example as a reference.
-
-The backend requires a running MongoDB instance and the required environment variables, including the MongoDB connection string and JWT secret.
-
-2. Frontend
-
-cd frontend
-npm install
-npm run dev
-
-The frontend runs on http://localhost:5173.
-
-The Vite development configuration proxies /api requests to the backend.
-
-What's Implemented
-
-Auth: Register/login with JWT, bcrypt password hashing, and protected routes.
-
-Profile: Bio, city, skills-to-teach / skills-to-learn with level, and badges.
-
-Explore & Match: Non-AI mutual-match logic that surfaces users where your "want to learn" overlaps their "can teach" and vice versa; send, accept, and reject match requests.
-
-Sessions: Schedule from an accepted match, placeholder meeting link, mark sessions as completed/cancelled, and add notes.
-
-Chat: Opens after a match is accepted, with persisted messages and Socket.io live updates.
-
-Reviews: 1–5 star rating after a completed session, updates the ratee's average rating, and supports the "Peer Rated" badge.
-
-Reports: Report a user from the match/chat workflow.
-
-What's Stubbed / Left for Future Extension
-
-Google OAuth: Currently, email/password authentication is implemented.
-
-Real Zoom/Google Meet API integration: Currently, a meeting-link field is used instead of direct video-call integration.
-
-Email notifications / session reminders: Reminder-related schema support exists, but no cron/email sender is wired up.
-
-File upload: Chat attachments and skill proof documents are not currently implemented.
-
-Skill verification workflow: The current implementation uses a manual admin verification/toggle rather than an automated test/document review workflow.
+🔄 User Flow
+[Home Page]
+   ↓
+[Login/Register]
+   ↓
+[Create Profile: Skills to Teach + Learn]
+   ↓
+[View Matches]
+   ↓
+[Send Match Request]
+   ↓
+[Match Accepted]
+   ↓
+[Chat Opens + Schedule Session]
+   ↓
+[Attend Session]
+   ↓
+[Leave Review + Mark as Completed]
+   ↓
+[Track Progress → Next Match]
