@@ -1,30 +1,57 @@
-# SkillSync — Peer-to-Peer Skill Swapping Platform
+SkillSync — Peer-to-Peer Skill Swapping Platform
 
 MERN stack app: MongoDB, Express, React (Vite), Node.js, with Socket.io for real-time chat.
 
-## Folder structure
+Folder Structure
 
-```
 skillsync/
 ├── backend/
-│   ├── config/db.js
-│   ├── controllers/        # authController, userController, matchController,
-│   │                         sessionController, reviewController, messageController,
-│   │                         reportController, adminController
-│   ├── middleware/auth.js  # JWT protect + adminOnly
-│   ├── models/              # User, Match, Session, Review, Message, Report
-│   ├── routes/               # one router file per resource
+│   ├── config/
+│   │   └── db.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── userController.js
+│   │   ├── matchController.js
+│   │   ├── sessionController.js
+│   │   ├── reviewController.js
+│   │   ├── messageController.js
+│   │   ├── reportController.js
+│   │   └── adminController.js
+│   ├── middleware/
+│   │   └── auth.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Match.js
+│   │   ├── Session.js
+│   │   ├── Review.js
+│   │   ├── Message.js
+│   │   └── Report.js
+│   ├── routes/
 │   ├── .env.example
 │   ├── package.json
 │   └── server.js
 └── frontend/
     ├── src/
-    │   ├── api/axios.js
-    │   ├── context/AuthContext.jsx
-    │   ├── components/       # Sidebar, DashboardLayout, ProtectedRoute
-    │   ├── pages/             # Home, Login, Register, Dashboard, ExploreMatches,
-    │   │                        MyMatches, MatchDetails, Sessions, Profile
-    │   ├── pages/admin/AdminOverview.jsx
+    │   ├── api/
+    │   │   └── axios.js
+    │   ├── context/
+    │   │   └── AuthContext.jsx
+    │   ├── components/
+    │   │   ├── Sidebar
+    │   │   ├── DashboardLayout
+    │   │   └── ProtectedRoute
+    │   ├── pages/
+    │   │   ├── Home.jsx
+    │   │   ├── Login.jsx
+    │   │   ├── Register.jsx
+    │   │   ├── Dashboard.jsx
+    │   │   ├── ExploreMatches.jsx
+    │   │   ├── MyMatches.jsx
+    │   │   ├── MatchDetails.jsx
+    │   │   ├── Sessions.jsx
+    │   │   └── Profile.jsx
+    │   ├── pages/admin/
+    │   │   └── AdminOverview.jsx
     │   ├── App.jsx
     │   ├── main.jsx
     │   └── index.css
@@ -33,63 +60,63 @@ skillsync/
     ├── vite.config.js
     ├── tailwind.config.js
     └── postcss.config.js
-```
 
-## Setup
+Live Application
 
-### 1. Backend
+https://skill-sync-seven-peach.vercel.app/
 
-```bash
+Repository
+
+https://github.com/nkour5308/SkillSync
+
+Setup
+
+1. Backend
+
 cd backend
-cp .env.example .env     # then fill in MONGO_URI and JWT_SECRET
 npm install
-npm run dev               # requires nodemon (npm i -g nodemon), or use: npx nodemon server.js
-```
+npm run dev
 
-Runs on `http://localhost:5000`. Needs a running MongoDB instance (local `mongod`, or a free
-MongoDB Atlas cluster — just paste its connection string into `MONGO_URI`).
+The backend runs on http://localhost:5000.
 
-### 2. Frontend
+Create a .env file inside the backend folder using .env.example as a reference.
 
-```bash
+The backend requires a running MongoDB instance and the required environment variables, including the MongoDB connection string and JWT secret.
+
+2. Frontend
+
 cd frontend
 npm install
 npm run dev
-```
 
-Runs on `http://localhost:5173` and proxies `/api` calls to the backend.
+The frontend runs on http://localhost:5173.
 
-### 3. Make yourself an admin
+The Vite development configuration proxies /api requests to the backend.
 
-Register a normal account through the UI, then in MongoDB (e.g. via `mongosh` or Compass) run:
+What's Implemented
 
-```js
-db.users.updateOne({ email: "you@example.com" }, { $set: { role: "admin" } })
-```
+Auth: Register/login with JWT, bcrypt password hashing, and protected routes.
 
-Log out and back in — you'll now see the Admin Panel link in the sidebar.
+Profile: Bio, city, skills-to-teach / skills-to-learn with level, and badges.
 
-## What's implemented
+Explore & Match: Non-AI mutual-match logic that surfaces users where your "want to learn" overlaps their "can teach" and vice versa; send, accept, and reject match requests.
 
-- **Auth**: register/login with JWT, bcrypt password hashing, protected routes
-- **Profile**: bio, city, skills-to-teach / skills-to-learn (with level), badges
-- **Explore & Match**: non-AI mutual-match logic — surfaces users where your "want to learn"
-  overlaps their "can teach" and vice versa; send/accept/reject match requests
-- **Sessions**: schedule from an accepted match, placeholder meeting link, mark
-  completed/cancelled, notes field
-- **Chat**: opens only after a match is accepted, persisted messages + Socket.io live updates
-- **Reviews**: 1–5 star rating after a completed session, auto-updates the ratee's average
-  and unlocks the "Peer Rated" badge
-- **Reports**: report a user from the match/chat screen
-- **Admin panel**: stats overview, top skills, user list with block/unblock and manual
-  "Verified Teacher" badge, report queue with resolve action
+Sessions: Schedule from an accepted match, placeholder meeting link, mark sessions as completed/cancelled, and add notes.
 
-## What's stubbed / left for you to extend
+Chat: Opens after a match is accepted, with persisted messages and Socket.io live updates.
 
-- Google OAuth (currently email/password only)
-- Real Zoom/Google Meet API integration (currently a placeholder link field)
-- Email notifications / session reminders (schema field `reminderSent` is there, no cron/email
-  sender wired up yet)
-- File upload for chat attachments and skill "proof" documents (schema fields exist, no
-  upload endpoint yet — wire up `multer`, already in `package.json`)
-- Skill verification via test/document review workflow (currently a manual admin toggle)
+Reviews: 1–5 star rating after a completed session, updates the ratee's average rating, and supports the "Peer Rated" badge.
+
+Reports: Report a user from the match/chat workflow.
+
+What's Stubbed / Left for Future Extension
+
+Google OAuth: Currently, email/password authentication is implemented.
+
+Real Zoom/Google Meet API integration: Currently, a meeting-link field is used instead of direct video-call integration.
+
+Email notifications / session reminders: Reminder-related schema support exists, but no cron/email sender is wired up.
+
+File upload: Chat attachments and skill proof documents are not currently implemented.
+
+Skill verification workflow: The current implementation uses a manual admin verification/toggle rather than an automated test/document review workflow.
